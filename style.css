@@ -1,0 +1,226 @@
+:root {
+   --ff-heading: "Satoshi", sans-serif;
+   --ff-body: "Space Mono", serif;
+
+   --tomato: #F54E28;
+   --color-text: #2F2F2F;
+   --subtle-grey: #B5B5B5;
+   --super-subtle-grey: #f1f5f9;
+   --green: #2ecc71;
+   --yellow: #f1c40f;
+   --purple: #c05ee5;
+   --grey: #64748B;
+}
+*, *::before, *::after {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+input, button, textarea, select {
+   font-family: inherit;
+   font-size: inherit
+}
+
+img {
+   display: block;
+   max-width: 100%
+}
+
+body {
+   line-height: 1.5;
+   font-family: var(--ff-body);
+   color: var(--color-text);
+
+   --page-width: min(70rch, calc(100vw - 2.5rem));
+
+   --rating-0: var(--yellow);
+   --rating-1: var(--green);
+   --rating-2: var(--purple);
+}
+h1, h2, h3, h4, h5, h6 {
+   font-family: var(--ff-heading);
+   font-weight: 900;
+   color: var(--tomato);
+}
+header {
+   background-color: var(--super-subtle-grey);
+   padding-block: 2rem;
+   > * {
+      width: var(--page-width);
+      margin-inline: auto;
+      /* probably change this to subgrid if u can be bothered */
+   }
+}
+main {
+   margin-inline: auto;
+   width: var(--page-width);
+   padding-block: 1rem;
+}
+.sticker {
+   scale: 80%;
+   padding: .1em .7em;
+   background-color: var(--green);
+   font-weight: 800;
+   rotate: -14deg;
+   position: absolute;
+   left: -2rem;
+   top: -50%;
+}
+.joke-list {
+   > li {
+      position: relative;
+      display: flex;
+      flex-wrap: nowrap;
+
+      align-items: center;
+      gap: 1ch;
+      padding-block: .8em;
+      cursor: pointer;
+
+      :has(:hover) > &:not(:hover) {
+         opacity: .2;
+      }
+
+      > :first-child {
+         &:is(.rating-0) {
+            --colour: var(--rating-0);
+         }
+         &.rating-1 {
+            --colour: var(--rating-1);
+         }
+         &.rating-2 {
+            --colour: var(--rating-2);
+         }
+         width: 1.5rch;
+         flex-shrink: 0;
+
+         color: var(--colour);
+         font-size: 1.15em;
+         font-weight: 900;
+         display: grid;
+         place-content: center;
+
+         &:empty {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background-color: var(--colour);
+         }
+         &:is(svg) {
+            stroke-width: 2;
+            scale: 1.5;
+         }
+      }
+      > .counter {
+         &::before {
+            content: "[";
+            color: var(--subtle-grey);
+         }
+         &::after {
+            content: "]";
+            color: var(--subtle-grey);
+         }
+      }
+      > .hr {
+         width: 0;
+         flex-grow: 1;
+         text-align: right;
+      }
+      > .name {
+         overflow: hidden;
+         text-overflow: ellipsis;
+         text-wrap: nowrap;
+
+         flex-shrink: 1;
+
+         &::after {
+            content: "?";
+            color: var(--subtle-grey);
+         }
+      }
+      > .date {
+         color: var(--grey);
+         flex-shrink: 0;
+      }
+   }
+}
+.hr {
+   width: 100%;
+   overflow: hidden;
+   text-wrap: nowrap;
+   color: var(--subtle-grey);
+}
+.page-container {
+   position: fixed;
+   width: 100vw;
+   height: 100vh;
+   z-index: 999;
+
+   display: grid;
+   grid-template-areas: "pile";
+   place-content: center;
+
+   transition: background-color 600ms;
+
+   background-color: rgba(225, 225, 225, 0.7);
+
+   &:empty, &:has(.hide:only-child) {
+      background-color: rgb(255 255 255 / 0);
+      pointer-events: none;
+   }
+   
+   overflow: hidden;
+   
+   cursor: alias;
+
+   > .page {
+      grid-area: pile;
+
+      width: calc(var(--page-width) * 0.9);
+      aspect-ratio: 1;
+
+      background-color: white;
+      box-shadow: 0px 7px 25px -12px rgb(0 0 0 / .3);
+      animation: page-appear 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      rotate: 3deg;
+
+      padding: min(5%, 3rem);
+
+      > img {
+         width: 100%;
+         height: 100%;
+         margin-inline: auto;
+         object-fit: cover;
+      }
+
+      &.hide {
+         animation: page-disappear 800ms cubic-bezier(0.47, 0, 0.75, 0.72) forwards; 
+      }
+   }
+}
+@keyframes page-appear {
+   from {
+      rotate: -15deg;
+      translate: -200px 150vh;
+   }
+}
+@keyframes page-disappear {
+   to {
+      rotate: 15deg;
+      translate: 200px 150vh;
+   }
+}
+/* @keyframes article-out {
+   0% {
+     transform: rotate(0deg) scale(1) translateX(0);
+   }
+   100% {
+     transform: rotate(-55deg) scale(1) translateX(calc(-100% - 200px));
+   }
+ } */
+@keyframes fade-in {
+   from {
+      background-color: rgb(255 255 255 / 0);
+   }
+}
