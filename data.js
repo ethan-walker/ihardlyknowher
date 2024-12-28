@@ -1,4 +1,4 @@
-[
+const jokeData = [
    {
       "name":     "######A",
       "actual":   "GORILLA",

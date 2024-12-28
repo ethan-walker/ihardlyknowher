@@ -1,8 +1,3 @@
-window.onerror = function(msg, url, linenumber) {
-   alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
-   return true;
-}
-
 const startDate = "2024-12-25";
 
 const pageContainer = document.querySelector(".page-container");
@@ -27,11 +22,7 @@ function showPage(e) {
    page.classList.add("page");
 
    const img = document.createElement("img");
-   fetch('./data.json')
-      .then((response) => response.json())
-      .then((json) => {
-         img.src = json[id].src;
-      });
+   img.src = jokeData[id].src;
 
    page.appendChild(img);
 
@@ -55,14 +46,9 @@ function hideAllPages() {
 pageContainer.onclick = hideAllPages;
 
 function loadJokes() {
-   fetch('./data.json')
-      .then((response) => response.json())
-      .then((json) => {
-         json = json.slice(0, daysSince() + 1)
-         json.entries().forEach(item => {
-            addJoke(item[0], item[1])
-         })
-      });
+   jokeData.slice(0, daysSince() + 1).entries().forEach(item => {
+      addJoke(item[0], item[1])
+   })
 }
 
 loadJokes();
