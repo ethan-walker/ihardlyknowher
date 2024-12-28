@@ -1,3 +1,7 @@
+window.onerror = function(msg, url, linenumber) {
+   alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+   return true;
+}
 
 const startDate = "2024-12-25";
 
